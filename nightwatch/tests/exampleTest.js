@@ -31,7 +31,25 @@ module.exports = {
             //set the transaction from your data file
         let transaction = data.transactions.olnOnly
             //send the fields & data to input
-        functions.inputSet(selectors.fields, data.transactions.olnOnly.fields, browser)
+        functions.inputSet(selectors.fields, transaction.fields, browser)
+        browser
+            //submit
+            .click(selectors.buttons.submit)
+            .pause(100)
+            //expect header to be right
+            .expect.element(selectors.messages.header).text.to.equal(transaction.results.header)
+            //expect error list to contain all the right errors
+        functions.messagesCheck(selectors.messages.errorList, transaction.results.errorList, browser) //looking for errors
+            //expect query title to be right
+        browser.expect.element(selectors.messages.queryTitle).text.to.equal(transaction.results.queryTitle)
+            //expect assembled query to be right
+        browser.expect.element(selectors.messages.assembledQuery).text.to.equal(transaction.results.assembledQuery)
+    },
+    'No data in text fields' : browser => {
+            //set the transaction from your data file
+        let transaction = data.transactions.noData // checking what data set its looking for
+            //send the fields & data to input
+        functions.inputSet(selectors.fields, transaction.fields, browser)
         browser
             //submit
             .click(selectors.buttons.submit)
@@ -40,6 +58,42 @@ module.exports = {
             .expect.element(selectors.messages.header).text.to.equal(transaction.results.header)
             //expect error list to contain all the right errors
         functions.messagesCheck(selectors.messages.errorList, transaction.results.errorList, browser)
+            //expect query title to be right
+        browser.expect.element(selectors.messages.queryTitle).text.to.equal(transaction.results.queryTitle)
+            //expect assembled query to be right
+        browser.expect.element(selectors.messages.assembledQuery).text.to.equal(transaction.results.assembledQuery)
+    },
+    'boundry test' : browser => {
+            //set the transaction from your data file
+        let transaction = data.transactions.boundryTest
+            //send the fields & data to input
+        functions.inputSet(selectors.fields, transaction.fields, browser)
+        browser
+            //submit
+            .click(selectors.buttons.submit)
+            .pause(100)
+            //expect header to be right
+            .expect.element(selectors.messages.header).text.to.equal(transaction.results.header)
+            //expect error list to be empty
+        browser.expect.element(selectors.messages.errorList).text.to.equal('')
+            //expect query title to be right
+        browser.expect.element(selectors.messages.queryTitle).text.to.equal(transaction.results.queryTitle)
+            //expect assembled query to be right
+        browser.expect.element(selectors.messages.assembledQuery).text.to.equal(transaction.results.assembledQuery)
+    },
+    'boundry test' : browser => {
+            //set the transaction from your data file
+        let transaction = data.transactions.lowTest
+            //send the fields & data to input
+        functions.inputSet(selectors.fields, transaction.fields, browser)
+        browser
+            //submit
+            .click(selectors.buttons.submit)
+            .pause(100)
+            //expect header to be right
+            .expect.element(selectors.messages.header).text.to.equal(transaction.results.header)
+            //expect error list to be empty
+        browser.expect.element(selectors.messages.errorList).text.to.equal('')
             //expect query title to be right
         browser.expect.element(selectors.messages.queryTitle).text.to.equal(transaction.results.queryTitle)
             //expect assembled query to be right
